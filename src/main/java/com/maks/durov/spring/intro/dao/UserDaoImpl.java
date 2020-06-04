@@ -2,7 +2,9 @@ package com.maks.durov.spring.intro.dao;
 
 import com.maks.durov.spring.intro.model.User;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -45,6 +47,20 @@ public class UserDaoImpl implements UserDao {
                     .getCriteriaBuilder().createQuery(User.class);
             criteriaQuery.from(User.class);
             return session.createQuery(criteriaQuery).getResultList();
+        } catch (HibernateException e) {
+            throw new RuntimeException("Can't get all users", e);
+        }
+    }
+
+    @Override
+    public User getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+            Root<User> userRoot = criteriaQuery.from(User.class);
+            criteriaQuery.from(User.class);
+            criteriaQuery.select(userRoot).where(criteriaBuilder.equal(userRoot.get("id"), id));
+            return session.createQuery(criteriaQuery).getSingleResult();
         } catch (HibernateException e) {
             throw new RuntimeException("Can't get all users", e);
         }
