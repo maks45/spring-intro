@@ -20,7 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/inject")
+    @RequestMapping(value = "/inject", method = RequestMethod.GET)
     public String injectUsers() {
         User userMarge = new User();
         userMarge.setName("Marge");
@@ -41,7 +41,7 @@ public class UserController {
         return "4 users were added";
     }
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<UserResponseDto> getAll() {
         List<UserResponseDto> userResponseDtoList = new ArrayList<>();
         userService.listUsers().forEach(user -> {
