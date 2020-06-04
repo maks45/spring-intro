@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/user")
@@ -22,7 +23,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/inject")
-    public String injectUsers() {
+    public ModelAndView injectUsers() {
         User userMarge = new User();
         userMarge.setName("Marge");
         userMarge.setEmail("marge@fakemail.com");
@@ -39,7 +40,7 @@ public class UserController {
         userHomer.setName("Homer");
         userHomer.setEmail("homer@fakemail.com");
         userService.add(userHomer);
-        return "4 users were added";
+        return new ModelAndView("redirect:/user/");
     }
 
     @GetMapping(value = "/")
