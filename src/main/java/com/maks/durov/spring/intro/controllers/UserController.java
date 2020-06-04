@@ -5,6 +5,7 @@ import com.maks.durov.spring.intro.model.User;
 import com.maks.durov.spring.intro.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/inject", method = RequestMethod.GET)
+    @GetMapping(value = "/inject")
     public String injectUsers() {
         User userMarge = new User();
         userMarge.setName("Marge");
@@ -41,7 +42,7 @@ public class UserController {
         return "4 users were added";
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = "/")
     public List<UserResponseDto> getAll() {
         List<UserResponseDto> userResponseDtoList = new ArrayList<>();
         userService.listUsers().forEach(user -> {
