@@ -62,7 +62,7 @@ public class UserDaoImpl implements UserDao {
             criteriaQuery.select(userRoot).where(criteriaBuilder.equal(userRoot.get("id"), id));
             return session.createQuery(criteriaQuery).getSingleResult();
         } catch (HibernateException e) {
-            throw new RuntimeException("Can't get all users", e);
+            throw new RuntimeException("Can't get user with id" + id, e);
         }
     }
 }
