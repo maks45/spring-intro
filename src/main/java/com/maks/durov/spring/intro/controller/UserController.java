@@ -1,4 +1,4 @@
-package com.maks.durov.spring.intro.controllers;
+package com.maks.durov.spring.intro.controller;
 
 import com.maks.durov.spring.intro.dto.UserResponseDto;
 import com.maks.durov.spring.intro.model.User;
