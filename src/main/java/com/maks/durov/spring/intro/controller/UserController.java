@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,21 +41,19 @@ public class UserController {
         return new ModelAndView("redirect:/user/");
     }
 
-    @GetMapping(value = "/")
+    @GetMapping
     public List<UserResponseDto> getAll() {
         List<UserResponseDto> userResponseDtoList = new ArrayList<>();
-        userService.listUsers().forEach(user -> {
-            UserResponseDto userResponseDto = new UserResponseDto();
-            userResponseDto.setEmail(user.getEmail());
-            userResponseDto.setName(user.getName());
-            userResponseDtoList.add(userResponseDto);
-        });
+        userService.listUsers().forEach(user -> userResponseDtoList.add(getUserResponseDto(user)));
         return userResponseDtoList;
     }
 
-    @RequestMapping(value = "/get/{userId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{userId}")
     public UserResponseDto getUser(@PathVariable Long userId) {
-        User user = userService.getById(userId);
+        return getUserResponseDto(userService.getById(userId));
+    }
+
+    private UserResponseDto getUserResponseDto(User user) {
         UserResponseDto userResponseDto = new UserResponseDto();
         userResponseDto.setEmail(user.getEmail());
         userResponseDto.setName(user.getName());
